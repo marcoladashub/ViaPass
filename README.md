@@ -24,7 +24,7 @@ Aplicação web que simula a catraca de um ônibus com leitor de cartão. O usu�
 ## Regras de negócio
 
 1. Cada passagem é cobrada **inteira**, sem integração.
-2. O valor da tarifa fica em configuração: `TARIFA = a definir`.
+2. A tarifa é de **R$ 5,40** e fica definida em `src/config.py` (`TARIFA`), um único lugar para alterar.
 3. O cartão precisa existir, estar ativo e pertencer a um usuário válido.
 4. Se o saldo for maior ou igual à tarifa: desconta, registra a viagem e libera a catraca.
 5. Se o saldo for insuficiente: recusa e informa o saldo atual.
@@ -78,7 +78,6 @@ Exemplo de resposta de `POST /catraca/validar`:
 
 ## Decisões em aberto
 
-- Valor da tarifa
 - Tecnologia do frontend
 - Padrão de commits
 
