@@ -71,7 +71,7 @@ Exemplo de resposta de `POST /catraca/validar`:
 
 ## Organização do time
 
-- Uma branch por funcionalidade (`feature/nome-da-funcionalidade`)
+- Uma branch por funcionalidade (`feature/funcionalidade`)
 - Mudanças entram na `main` via pull request, revisado pela outra pessoa
 - Tarefas organizadas em quadro (ex: GitHub Projects, Trello)
 - Padrão de commits: a combinar
