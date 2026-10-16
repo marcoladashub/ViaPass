@@ -65,9 +65,81 @@ Exemplo de resposta de `POST /catraca/validar`:
 
 ## Como rodar
 
+## Como rodar
+
+### Pré-requisitos
+- Python 3.10 ou superior
+- Docker (para o PostgreSQL) ou um PostgreSQL local
+- Git
+
+### 1. Clonar o repositório
+
 ```bash
-# a preencher quando o projeto tiver a primeira versão
+git clone https://github.com/marcoladashub/ViaPass.git
+cd ViaPass
 ```
+
+### 2. Subir o banco de dados
+
+Com Docker, escolha uma senha sua e rode:
+
+```bash
+docker run --name viapass-db -e POSTGRES_USER=viapass -e POSTGRES_PASSWORD=sua_senha -e POSTGRES_DB=viapass -p 5433:5432 -v viapass_data:/var/lib/postgresql/data -d postgres:16
+```
+
+Nas próximas vezes, basta `docker start viapass-db`.
+
+Se preferir usar um PostgreSQL já instalado, crie um banco chamado `viapass` e ajuste a URL do passo seguinte.
+
+### 3. Configurar o `.env`
+
+Copie o modelo e preencha com a sua senha:
+
+```bash
+copy .env.example .env      # Windows
+cp .env.example .env        # Linux e Mac
+```
+
+Conteúdo esperado do `.env`:
+
+```
+DATABASE_URL=postgresql+psycopg2://viapass:sua_senha@localhost:5433/viapass
+```
+
+O `.env` não vai para o Git. Cada pessoa mantém o seu.
+
+### 4. Instalar as dependências
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate          # Windows (Linux e Mac: source .venv/bin/activate)
+pip install -r requirements.txt
+```
+
+### 5. Criar os dados de teste (opcional)
+
+```bash
+python -m src.seed
+```
+
+Cria 4 usuários e 4 cartões de exemplo: um com saldo, um com saldo insuficiente, um bloqueado e um com usuário inativo.
+
+### 6. Rodar a API
+
+```bash
+python -m uvicorn src.main:app --reload
+```
+
+- Documentação interativa: http://localhost:8000/docs
+- Teste de saúde: http://localhost:8000/health
+
+As tabelas são criadas automaticamente na primeira vez que a API sobe.
+
+### Problemas comuns
+
+- **Erro `No module named 'psycopg'`:** a URL do banco precisa começar com `postgresql+psycopg2://`.
+- **Erro de senha na conexão:** confira se a senha do `.env` é a mesma usada no `docker run`.
+- **Scripts desabilitados no PowerShell:** rode `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` e ative o venv de novo.
 
 ## Organização do time
 
